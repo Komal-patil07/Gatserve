@@ -4,6 +4,7 @@ import '../screens/product_detail_screen.dart';
 
 class FoodCard extends StatelessWidget {
   final Food food;
+
   const FoodCard({super.key, required this.food});
 
   @override
@@ -14,33 +15,54 @@ class FoodCard extends StatelessWidget {
             arguments: food);
       },
       child: Card(
-        elevation: 2,
+        elevation: 3,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        clipBehavior: Clip.antiAlias,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(12)),
-              child: AspectRatio(
-                aspectRatio: 3 / 2,
-                child: Image.network(food.imageUrl, fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) {
-                  return Container(color: Colors.grey[200]);
-                }),
+            // 🖼 Image fills the top of the card without white gaps
+            Expanded(
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(12),
+                  topRight: Radius.circular(12),
+                ),
+                child: food.imageUrl.startsWith('http')
+                    ? Image.network(
+                        food.imageUrl,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      )
+                    : Image.asset(
+                        food.imageUrl,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
               ),
             ),
+
+            // 🍽 Title and Price section
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Row(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                      child: Text(food.title,
-                          style: const TextStyle(fontWeight: FontWeight.bold))),
-                  Text('\$${food.price.toStringAsFixed(2)}',
-                      style: const TextStyle(fontWeight: FontWeight.bold)),
+                  Text(
+                    food.title,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 14),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    '\$${food.price.toStringAsFixed(2)}',
+                    style: const TextStyle(
+                        color: Colors.black54, fontWeight: FontWeight.w600),
+                  ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

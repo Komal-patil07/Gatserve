@@ -28,12 +28,59 @@ final sampleFoods = [
       title: 'Meat Vegetable',
       description: 'Healthy meat with fresh veggies',
       price: 65.08,
-      imageUrl: "c:gatserve\assets\images\vegi.jpg"),
+      imageUrl: 'assets/images/vegi.jpg'),
   Food(
       id: 'f3',
       title: 'Fried Egg',
       description: 'Sunny side up eggs',
       price: 15.06,
-      imageUrl:
-          "https://www.google.com/url?sa=i&url=https%3A%2F%2Fellegourmet.ca%2Fhow-to-make-perfect-fried-egg%2F&psig=AOvVaw0AptjAOlBFb_cIGr1fasnT&ust=1760362749517000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCLjAjLTknpADFQAAAAAdAAAAABAE"),
+      imageUrl: 'assets/images/friedegg.jpeg'),
+  Food(
+      id: 'f4',
+      title: 'Poha',
+      description: 'Sunny side up eggs',
+      price: 15.06,
+      imageUrl: 'assets/images/Poha-Recipe.jpg'),
+  Food(
+      id: 'f5',
+      title: 'vegetable noddles',
+      description: 'Sunny side up eggs',
+      price: 15.06,
+      imageUrl: 'assets/images/noddles.jpg'),
+  Food(
+      id: 'f6',
+      title: 'maggie',
+      description: 'Sunny side up eggs',
+      price: 15.06,
+      imageUrl: 'assets/images/maggie.webp'),
+  Food(
+      id: 'f7',
+      title: 'Gobi rice',
+      description: 'Sunny side up eggs',
+      price: 15.06,
+      imageUrl: 'assets/images/gobirice.jpeg'),
+  Food(
+      id: 'f8',
+      title: 'panner parotha',
+      description: 'Sunny side up eggs',
+      price: 15.06,
+      imageUrl: 'assets/images/paneer_paratha.jpg'),
+  Food(
+      id: 'f9',
+      title: 'Alo parotha',
+      description: 'Sunny side up eggs',
+      price: 15.06,
+      imageUrl: 'assets/images/Poha-Recipe.jpg'),
+  Food(
+      id: 'f3',
+      title: 'idli',
+      description: 'Sunny side up eggs',
+      price: 15.06,
+      imageUrl: 'assets/images/idli_sambar.jpg'),
+  Food(
+      id: 'f3',
+      title: 'Masala Dosa',
+      description: 'Sunny side up eggs',
+      price: 15.06,
+      imageUrl: 'assets/images/Masala_Dosa.jpg'),
 ];
