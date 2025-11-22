@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'screens/login_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/product_detail_screen.dart';
@@ -7,6 +8,9 @@ import 'screens/cart_screen.dart';
 import 'providers/cart_provider.dart';
 import 'theme.dart';
 import 'screens/payment_screen.dart';
+
+// ⭐ ADD THIS IMPORT
+import 'screens/signup_screen.dart';
 
 void main() {
   runApp(const HelloFoodApp());
@@ -26,6 +30,10 @@ class HelloFoodApp extends StatelessWidget {
         initialRoute: LoginScreen.routeName,
         routes: {
           LoginScreen.routeName: (_) => const LoginScreen(),
+
+          // ⭐ ADD SIGNUP ROUTE HERE
+          SignUpScreen.routeName: (_) => const SignUpScreen(),
+
           HomeScreen.routeName: (_) => const HomeScreen(),
           ProductDetailScreen.routeName: (_) => const ProductDetailScreen(),
           CartScreen.routeName: (_) => const CartScreen(),

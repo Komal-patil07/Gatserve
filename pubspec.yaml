@@ -25,12 +25,4 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/vegi.jpg
-    - assets/images/friedegg.jpeg
-    - assets/images/Poha-Recipe.jpg
-    - assets/images/noddles.jpg
-    - assets/images/maggie.webp
-    - assets/images/gobirice.jpeg
-    - assets/images/Masala_Dosa.jpg
-    - assets/images/paneer_paratha.jpg
-    - assets/images/idli_sambar.jpg
+    - assets/images/
