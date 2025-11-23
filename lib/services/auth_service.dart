@@ -6,7 +6,7 @@ class AuthService {
   static const String baseUrl = "http://192.168.0.102:5000/api/auth";
 
   /* ======================
-       LOGIN
+       LOGIN (ADMIN + USER)
   ======================= */
   static Future<Map<String, dynamic>> login(
       String phone, String password) async {
@@ -18,7 +18,15 @@ class AuthService {
       body: jsonEncode({"phone": phone, "password": password}),
     );
 
-    return jsonDecode(response.body);
+    final data = jsonDecode(response.body);
+
+    return {
+      "status": response.statusCode,
+      "message": data["message"],
+      "token": data["token"],
+      "user": data["user"],
+      "role": data["user"]?["role"], // 👈 IMPORTANT for admin redirect
+    };
   }
 
   /* ======================

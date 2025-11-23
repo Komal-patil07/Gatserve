@@ -16,6 +16,13 @@ router.post("/register", async (req, res) => {
       return res.status(400).json({ message: "All fields are required" });
     }
 
+    // 🚫 Block admin registration from frontend
+    if (phone === "9999999999") {
+      return res.status(400).json({
+        message: "Admin account cannot be registered. It is predefined.",
+      });
+    }
+
     const existingUser = await User.findOne({ phone });
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
@@ -51,11 +58,30 @@ router.post("/register", async (req, res) => {
 });
 
 /* ===========================
-   LOGIN
+   LOGIN (USER + ADMIN)
 =========================== */
 router.post("/login", async (req, res) => {
   const { phone, password } = req.body;
 
+  /* 🔥 HARD-CODED ADMIN LOGIN */
+  if (phone === "9999999999" && password === "Admin@123") {
+    const adminToken = jwt.sign(
+      { role: "admin" },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
+
+    return res.json({
+      message: "Admin login successful",
+      token: adminToken,
+      user: {
+        role: "admin",
+        phone: "9999999999",
+      },
+    });
+  }
+
+  // Normal user login
   const user = await User.findOne({ phone });
   if (!user) return res.status(400).json({ message: "User not found" });
 
@@ -74,9 +100,27 @@ router.post("/login", async (req, res) => {
     token,
     user: {
       id: user._id,
+      name: user.name,
       phone: user.phone,
+      role: "user",
     },
   });
+});
+
+/* ===========================
+   👉 GET TOTAL USERS COUNT
+=========================== */
+router.get("/total-users", async (req, res) => {
+  try {
+    const count = await User.countDocuments();
+
+    return res.json({
+      totalUsers: count,
+    });
+  } catch (err) {
+    console.error("Error fetching user count:", err);
+    res.status(500).json({ message: "Server error" });
+  }
 });
 
 export default router;

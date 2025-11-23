@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
 import 'home_screen.dart';
 import 'signup_screen.dart';
+import 'admin_home_screen.dart'; // Make sure this file name is correct!
 
 class LoginScreen extends StatefulWidget {
   static const routeName = '/';
@@ -39,12 +40,22 @@ class _LoginScreenState extends State<LoginScreen> {
 
     final response = await AuthService.login(phone, password);
 
-    if (response.containsKey("token")) {
+    if (response["status"] == 200 && response["token"] != null) {
+      String role = response["role"] ?? "user";
+
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Login Successful")),
+        SnackBar(content: Text(response["message"])),
       );
 
-      Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+      // 🔥 ADMIN REDIRECT
+      if (role == "admin") {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const AdminDashboard()), // <----
+        );
+      } else {
+        Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+      }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(response["message"] ?? "Login failed")),
@@ -65,8 +76,6 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             children: [
               const SizedBox(height: 20),
-
-              // TOP CLOSE BUTTON
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -74,16 +83,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   const Text(''),
                 ],
               ),
-
               const Spacer(),
-
-              // CENTER LOGIN BLOCK
               Column(
                 children: [
                   const Icon(Icons.restaurant_menu,
                       size: 56, color: Colors.black54),
                   const SizedBox(height: 12),
-
                   const Text(
                     'GatServe',
                     style: TextStyle(
@@ -91,10 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-
                   const SizedBox(height: 30),
-
-                  // PHONE FIELD
                   TextField(
                     controller: _phoneCtrl,
                     keyboardType: TextInputType.phone,
@@ -103,10 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       prefixIcon: Icon(Icons.phone),
                     ),
                   ),
-
                   const SizedBox(height: 12),
-
-                  // PASSWORD FIELD
                   TextField(
                     controller: _passCtrl,
                     obscureText: true,
@@ -115,10 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       prefixIcon: Icon(Icons.lock),
                     ),
                   ),
-
                   const SizedBox(height: 12),
-
-                  // LOGIN BUTTON
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
@@ -132,51 +128,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 14),
-
-                  // OR DIVIDER
-                  Row(
-                    children: const [
-                      Expanded(child: Divider()),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Text('Or'),
-                      ),
-                      Expanded(child: Divider()),
-                    ],
-                  ),
-
-                  const SizedBox(height: 14),
-
-                  // SOCIAL ICONS
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: const CircleAvatar(child: Text('f')),
-                      ),
-                      const SizedBox(width: 12),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const CircleAvatar(child: Text('G')),
-                      ),
-                    ],
-                  ),
                 ],
               ),
-
               const Spacer(flex: 2),
-
-              // SIGNUP NAVIGATION
               TextButton(
                 onPressed: () {
                   Navigator.pushNamed(context, SignUpScreen.routeName);
                 },
                 child: const Text("Don't have an account? Sign Up"),
               ),
-
               const SizedBox(height: 10),
             ],
           ),
